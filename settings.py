@@ -42,3 +42,8 @@ CONTEXT_PROCESSORS = (
   'kay.context_processors.url_functions',
   'kay.context_processors.media_url',
 )
+
+MIDDLEWARE_CLASSES = (
+  'kay.auth.middleware.AuthenticationMiddleware',
+  'sammy.middleware.SubdomainMiddleware',
+)

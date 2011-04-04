@@ -150,10 +150,17 @@ class Base(db.Model):
         return cls(key_name=key_name, subdomain=subdomain, **kwargs)
 
 class StaticContent(Base):
+    path = db.StringProperty()
     body = db.BlobProperty()
     content_type = db.StringProperty(required=True)
     status = db.IntegerProperty(required=True, default=200)
     last_modified = db.DateTimeProperty(required=True, auto_now=True)
+
+    @classmethod
+    def get_latest(cls, subdomain, path):
+        record = cls.get_by_key_name(subdomain + ':' + record_id)
+        if record:
+            return record
 
 class UniqueId(db.Model):
     """This entity is used just to generate unique numeric IDs."""

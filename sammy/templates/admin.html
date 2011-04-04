@@ -21,6 +21,11 @@
   <!-- CSS: implied media="all" -->
   <link rel="stylesheet" href="media/css/style.css">
   <link rel="stylesheet" href="media/css/jquery-ui-1.8.11.custom.css">
+  <style type="text/css">
+    .ace_editor {height: 80%; width: 96%;}
+    .ui-tabs {height: 540px;}
+    iframe {height: 80%; width: 96%;}
+  </style>
 
 
   <!-- Uncomment if you are specifically targeting less enabled mobile browsers
@@ -35,7 +40,7 @@
 
   <div id="container">
     <header>
-        <h1>{{ message }}</h1>
+        <h1>{{ subdomain }}</h1>
     </header>
     <div id="main" role="main">
         <div id="tabs">
@@ -45,41 +50,46 @@
                 <li><a href="#javascript">Javascript</a></li>
                 <li><a href="#css">CSS</a></li>
                 <li><a href="#upload">Upload</a></li>
+                <li><a href="#preview">Preview</a></li>
             </ul>
             <div id="html">
                 <form action="/admin" method="POST">
-                    <div id="htmleditor">some text</div>
-                    <input type="hidden" name="subdomain" value="{{ message }}">
-                    <input type="submit" value="Submit HTML" name="sh" id="htmlButton" title="Submit">
+                    <div id="htmleditor" class="onepiece_editor">some text</div>
+                    <input type="hidden" name="subdomain" value="{{ subdomain }}">
+                    <input type="submit" value="Save HTML" name="sh" id="htmlButton" title="Submit">
                 </form>
             </div>
             <div id="libs">
                 <form action="/admin" method="POST">
                     <div id="libseditor">some text</div>
-                    <input type="hidden" name="subdomain" value="{{ message }}">
-                    <input type="submit" value="Submit Libs" name="sh" id="libsButton" title="Submit">
+                    <input type="hidden" name="subdomain" value="{{ subdomain }}">
+                    <input type="submit" value="Save Libs" name="sl" id="libsButton" title="Submit">
                 </form>
             </div>
             <div id="javascript">
                 <form action="/admin" method="POST">
-                    <input type="hidden" name="subdomain" value="{{ message }}">
+                    <input type="hidden" name="subdomain" value="{{ subdomain }}">
                     <div id="jseditor">some text</div>
-                    <input type="submit" value="Submit Javascript" name="sj" id="jsButton" title="Submit">
+                    <input type="submit" value="Save Javascript" name="sj" id="jsButton" title="Submit">
                 </form>
             </div>
             <div id="css">
                 <form action="/admin" method="POST">
-                    <input type="hidden" name="subdomain" value="{{ message }}">
+                    <input type="hidden" name="subdomain" value="{{ subdomain }}">
                     <div id="csseditor">some text</div>
-                    <input type="submit" value="Submit CSS" name="sc" id="cssButton" title="Submit">
+                    <input type="submit" value="Save CSS" name="sc" id="cssButton" title="Submit">
                 </form>
             </div>
             <div id="upload">
               <form id="upload_form" action="/admin/upload" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="subdomain" value="{{ subdomain }}">
                 <div class="select">Select file: <input type="file" name="file" id="file" /></div>
                 <div class="description"><span>Description: </span><textarea name="description" cols="40" rows="3"></textarea></div>
                 <div><input type="submit" value="Upload" class="super white button awesome" /></div>
               </form>
+            </div>
+            <div id="preview">
+              <iframe src="http://{{ subdomain }}.k2onepiece.appspot.com"></iframe>
             </div>
         </div>
 
@@ -96,9 +106,11 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
   <script>window.jQuery || document.write("<script src='media/js/libs/jquery-1.5.2.min.js'>\x3C/script>")</script>
+  <script src="media/js/libs/sammy-latest.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
   <script>window.jQuery || document.write("<script src='media/js/libs/jquery-ui-1.8.11.custom.min.js'>\x3C/script>")</script>
   <script src="media/js/libs/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="media/js/libs/ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
   <script src="media/js/libs/ace/mode-html.js" type="text/javascript" charset="utf-8"></script>
   <script src="media/js/libs/ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
   <script src="media/js/libs/ace/mode-css.js" type="text/javascript" charset="utf-8"></script>
@@ -111,6 +123,10 @@
           var libseditor = ace.edit("libseditor");
           var jseditor = ace.edit("jseditor");
           var csseditor = ace.edit("csseditor");
+          htmleditor.setTheme("ace/theme/twilight");
+          libseditor.setTheme("ace/theme/twilight");
+          jseditor.setTheme("ace/theme/twilight");
+          csseditor.setTheme("ace/theme/twilight");
           var HTMLMode = require("ace/mode/html").Mode;
           htmleditor.getSession().setMode(new HTMLMode());
           libseditor.getSession().setMode(new HTMLMode());
