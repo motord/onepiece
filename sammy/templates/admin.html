@@ -1,0 +1,132 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS: implied media="all" -->
+  <link rel="stylesheet" href="media/css/style.css">
+  <link rel="stylesheet" href="media/css/jquery-ui-1.8.11.custom.css">
+
+
+  <!-- Uncomment if you are specifically targeting less enabled mobile browsers
+  <link rel="stylesheet" media="handheld" href="media/css/handheld.css">  -->
+
+  <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+  <script src="media/js/libs/modernizr-1.7.min.js"></script>
+
+</head>
+
+<body>
+
+  <div id="container">
+    <header>
+        <h1>{{ message }}</h1>
+    </header>
+    <div id="main" role="main">
+        <div id="tabs">
+            <ul>
+                <li><a href="#html">HTML</a></li>
+                <li><a href="#libs">Libs</a></li>
+                <li><a href="#javascript">Javascript</a></li>
+                <li><a href="#css">CSS</a></li>
+                <li><a href="#upload">Upload</a></li>
+            </ul>
+            <div id="html">
+                <form action="/admin" method="POST">
+                    <div id="htmleditor">some text</div>
+                    <input type="hidden" name="subdomain" value="{{ message }}">
+                    <input type="submit" value="Submit HTML" name="sh" id="htmlButton" title="Submit">
+                </form>
+            </div>
+            <div id="libs">
+                <form action="/admin" method="POST">
+                    <div id="libseditor">some text</div>
+                    <input type="hidden" name="subdomain" value="{{ message }}">
+                    <input type="submit" value="Submit Libs" name="sh" id="libsButton" title="Submit">
+                </form>
+            </div>
+            <div id="javascript">
+                <form action="/admin" method="POST">
+                    <input type="hidden" name="subdomain" value="{{ message }}">
+                    <div id="jseditor">some text</div>
+                    <input type="submit" value="Submit Javascript" name="sj" id="jsButton" title="Submit">
+                </form>
+            </div>
+            <div id="css">
+                <form action="/admin" method="POST">
+                    <input type="hidden" name="subdomain" value="{{ message }}">
+                    <div id="csseditor">some text</div>
+                    <input type="submit" value="Submit CSS" name="sc" id="cssButton" title="Submit">
+                </form>
+            </div>
+            <div id="upload">
+              <form id="upload_form" action="/admin/upload" enctype="multipart/form-data" method="post">
+                <div class="select">Select file: <input type="file" name="file" id="file" /></div>
+                <div class="description"><span>Description: </span><textarea name="description" cols="40" rows="3"></textarea></div>
+                <div><input type="submit" value="Upload" class="super white button awesome" /></div>
+              </form>
+            </div>
+        </div>
+
+
+    </div>
+    <footer>
+
+    </footer>
+  </div> <!--! end of #container -->
+
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
+  <script>window.jQuery || document.write("<script src='media/js/libs/jquery-1.5.2.min.js'>\x3C/script>")</script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+  <script>window.jQuery || document.write("<script src='media/js/libs/jquery-ui-1.8.11.custom.min.js'>\x3C/script>")</script>
+  <script src="media/js/libs/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="media/js/libs/ace/mode-html.js" type="text/javascript" charset="utf-8"></script>
+  <script src="media/js/libs/ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+  <script src="media/js/libs/ace/mode-css.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- scripts concatenated and minified via ant build script-->
+  <script>
+      $(function() {
+          $("#tabs").tabs();
+          var htmleditor = ace.edit("htmleditor");
+          var libseditor = ace.edit("libseditor");
+          var jseditor = ace.edit("jseditor");
+          var csseditor = ace.edit("csseditor");
+          var HTMLMode = require("ace/mode/html").Mode;
+          htmleditor.getSession().setMode(new HTMLMode());
+          libseditor.getSession().setMode(new HTMLMode());
+          var JavaScriptMode = require("ace/mode/javascript").Mode;
+          jseditor.getSession().setMode(new JavaScriptMode());
+          var CSSMode = require("ace/mode/css").Mode;
+          csseditor.getSession().setMode(new CSSMode());
+      });
+  </script>
+  <!-- end scripts-->
+
+
+  <!--[if lt IE 7 ]>
+    <script src="media/js/libs/dd_belatedpng.js"></script>
+    <script>DD_belatedPNG.fix("img, .png_bg"); // Fix any <img> or .png_bg bg-images. Also, please read goo.gl/mZiyb </script>
+  <![endif]-->
+
+</body>
+</html>
