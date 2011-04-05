@@ -25,7 +25,8 @@ from kay.routing import (
 view_groups = [
   ViewGroup(
     Rule('/', endpoint='get_content', view='sammy.views.static.get_content'),
-    Rule('/admin', endpoint='ide', view='sammy.views.admin.ide'),
+    Rule('/claim', endpoint='ide', view='sammy.views.claim.ide'),
+    Rule('/admin', endpoint='manage', view='sammy.views.admin.manage'),
   )
 ]
 
